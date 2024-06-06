@@ -121,7 +121,7 @@ function App() {
             "end_time": endTime ? new Date(endTime).toISOString().replace('Z','') : '2024-06-03T23:59:59',
             "participants": participants ? participants : ''
           }
-          const response = await axios.post('http://localhost:5000/events', eventData, {
+          const response = await axios.post(`${process.env.REACT_APP_API_URL}/events`, eventData, {
               headers: {
                   'Content-Type': 'application/json',
               },
@@ -150,7 +150,7 @@ function App() {
     }
     if (args.requestType === "eventRemove"){
       const id = args.data[0].Id;
-      await axios.delete(`http://127.0.0.1:5000/events/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/events/${id}`);
     }
   };
 
@@ -160,7 +160,7 @@ function App() {
     useEffect(() => {
       const fetchCountry = async () => {
         try {
-          const response = await axios.get('https://ipinfo.io?token=9c65959784bc8d');
+          const response = await axios.get(`https://ipinfo.io?token=${process.env.REACT_APP_IPINFO_TOKEN}`);
           console.log(response)
           setCountry(response.data.country);
         } catch (error) {
@@ -193,7 +193,7 @@ function App() {
         try {
           const response = await axios.get('https://calendarific.com/api/v2/holidays', {
             params: {
-              // api_key: 'vjxUSaI4E2l9BI3nYkm6dbQBWFOYcvbD',
+              // api_key: ${process.env.REACT_APP_HOLIDAY_API_KEY},
               country: country !== '' ? country : 'US',
               year: new Date().getFullYear(),
               type: 'national'
