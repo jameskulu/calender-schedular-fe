@@ -172,7 +172,7 @@ function App() {
 
       const fetchEvents = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:5000/events');
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/events`);
             const fetchedEvents = response.data.map(event => ({
                 Id: event.id,
                 Subject: event.title,
@@ -193,7 +193,7 @@ function App() {
         try {
           const response = await axios.get('https://calendarific.com/api/v2/holidays', {
             params: {
-              // api_key: ${process.env.REACT_APP_HOLIDAY_API_KEY},
+              api_key: process.env.REACT_APP_HOLIDAY_API_KEY,
               country: country !== '' ? country : 'US',
               year: new Date().getFullYear(),
               type: 'national'
